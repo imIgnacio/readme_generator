@@ -1,11 +1,11 @@
-// TODO: Include packages needed for this application
+//Packages needed for this application
 const inquirer = require('inquirer');
 const fs = require('fs');
 const { connected } = require('process');
 
 let projectTitle;
 
-// TODO: Create an array of questions for user input
+//Array of questions for user input
 const questions = [
     {type: 'input',
     message:"What is the name of the project?",
@@ -37,7 +37,12 @@ const questions = [
 
 // TODO: Create a function to write README file
 function writeToFile(fileName, data) {
-    console.log("Entro aqui");
+    console.log(fileName);
+    console.log(data);
+
+    fs.appendFile(fileName, `\n ${data} \n`, (err) =>
+        err ? console.error(err) : console.log('Feature added successfully!')
+    )
 }
 
 // TODO: Create a function to initialize app
@@ -51,11 +56,20 @@ function init() {
     inquirer
     .prompt(questions)
     .then((response) =>  {
-        fs.writeFile(`${response.title}.md`, `# ${response.title}`, (err) =>
+        projectTitle = response.title.toLowerCase().split(" ").join("") + '.md';
+
+        fs.writeFile(projectTitle, `# ${response.title}`, (err) =>
             err ? console.error(err) : console.log('Readme created successfully!')
         )
-        projectTitle = response.title;
+
         writeToFile(projectTitle,response.description);
+        writeToFile(projectTitle,response.table);
+        writeToFile(projectTitle,response.installation);
+        writeToFile(projectTitle,response.usage);
+        writeToFile(projectTitle,response.license);
+        writeToFile(projectTitle,response.contributing);
+        writeToFile(projectTitle,response.tests);
+        writeToFile(projectTitle,response.faq);
     })
 }
 
