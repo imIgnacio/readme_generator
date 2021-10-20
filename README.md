@@ -2,7 +2,7 @@
 
 ## Description 
 
-Readme Generator is an APP created by Ignacio Diaz ![alt text](https://github.com/imIgnacio) to help people make readme files faster than ever. It will ask a user all features requested for a readme file to have. User just needs to write down information and Readme Generator will finish the job.
+Readme Generator is an APP created by Ignacio Diaz ![(https://github.com/imIgnacio)] to help people make readme files faster than ever. It will ask a user all features requested for a readme file to have. User just needs to write down information and Readme Generator will finish the job.
 
 ## Demonstration
 
