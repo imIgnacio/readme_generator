@@ -2,8 +2,10 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
 const { connected } = require('process');
+const markdown = require('./utils/generateMarkdown');
 
 let projectTitle;
+let licenseChosen;
 
 //Array of questions for user input
 const questions = [
@@ -30,15 +32,8 @@ const questions = [
         'GNU General Public License v3.0',
         'MIT License',
         'BSD 2-Clause "Simplified" License',
-        'BSD 3-Clause "New" or "Revised" License',
         'Boost Software License 1.0',
-        'Creative Commons Zero v1.0 Universal',
-        'Eclipse Public License 2.0',
-        'GNU Affero General Public License v3.0',
-        'GNU General Public License v2.0',
-        'GNU Lesser General Public License v2.1',
         'Mozilla Public License 2.0',
-        'The Unlicense',
     ]}, 
     {type: 'input',
     message:"Please write contributing",
@@ -51,10 +46,8 @@ const questions = [
     name: 'faq'}
 ];
 
-// TODO: Create a function to write README file
+// Create a function to write README file
 function writeToFile(fileName, data) {
-    console.log(fileName);
-    console.log(data);
 
     const dataToWrite = 
     `# ${data.title}
@@ -87,15 +80,15 @@ function writeToFile(fileName, data) {
 
     ${data.faq}
 
-    ${data.license}
+    ${licenseChosen}
     `
-
-    fs.writeFile(`${fileName}.md`, dataToWrite, (err) =>
+    
+    fs.writeFile(fileName, dataToWrite, (err) =>
             err ? console.error(err) : console.log('Readme created successfully!')
     )
 }
 
-// TODO: Create a function to initialize app
+// Create a function to initialize app
 function init() {
     console.log("Welcome to Readme generator app");
     console.log("You will be asked some questions, please provide information required so readme can be generated");
@@ -106,7 +99,8 @@ function init() {
     inquirer
     .prompt(questions)
     .then((data) =>  {
-        writeToFile(`${data.title}`, data);
+        licenseChosen = markdown(data);
+        writeToFile('SAMPLE.md', data);
     });
 }
 
