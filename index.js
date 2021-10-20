@@ -22,9 +22,24 @@ const questions = [
     {type: 'input',
     message:"Please describe usage",
     name: 'usage'}, 
-    {type: 'input',
-    message:"What it the license?",
-    name: 'license'}, 
+    {type: 'list',
+    message:"What it the license you would like to use?",
+    name: 'license',
+    choices: [
+        'Apache License 2.0',
+        'GNU General Public License v3.0',
+        'MIT License',
+        'BSD 2-Clause "Simplified" License',
+        'BSD 3-Clause "New" or "Revised" License',
+        'Boost Software License 1.0',
+        'Creative Commons Zero v1.0 Universal',
+        'Eclipse Public License 2.0',
+        'GNU Affero General Public License v3.0',
+        'GNU General Public License v2.0',
+        'GNU Lesser General Public License v2.1',
+        'Mozilla Public License 2.0',
+        'The Unlicense',
+    ]}, 
     {type: 'input',
     message:"Please write contributing",
     name: 'contributing'}, 
@@ -33,15 +48,50 @@ const questions = [
     name: 'tests'}, 
     {type: 'input',
     message:"What are frequently asked questions?",
-    name: 'faq'}];
+    name: 'faq'}
+];
 
 // TODO: Create a function to write README file
 function writeToFile(fileName, data) {
     console.log(fileName);
     console.log(data);
 
-    fs.appendFile(fileName, `\n ${data} \n`, (err) =>
-        err ? console.error(err) : console.log('Feature added successfully!')
+    const dataToWrite = 
+    `# ${data.title}
+    
+    ##App description
+
+    ${data.description}
+
+    ##Table of Contents
+
+    ${data.table}
+
+    ##Installation Process
+
+    ${data.installation}
+
+    ##Usage
+
+    ${data.usage}
+
+    ##Contributing
+
+    ${data.contributing}
+
+    ##Tests
+
+    ${data.tests}
+
+    ##FAQ
+
+    ${data.faq}
+
+    ${data.license}
+    `
+
+    fs.writeFile(`${fileName}.md`, dataToWrite, (err) =>
+            err ? console.error(err) : console.log('Readme created successfully!')
     )
 }
 
@@ -55,22 +105,9 @@ function init() {
     //Ask for project title so I can create readme file
     inquirer
     .prompt(questions)
-    .then((response) =>  {
-        projectTitle = response.title.toLowerCase().split(" ").join("") + '.md';
-
-        fs.writeFile(projectTitle, `# ${response.title}`, (err) =>
-            err ? console.error(err) : console.log('Readme created successfully!')
-        )
-
-        writeToFile(projectTitle,response.description);
-        writeToFile(projectTitle,response.table);
-        writeToFile(projectTitle,response.installation);
-        writeToFile(projectTitle,response.usage);
-        writeToFile(projectTitle,response.license);
-        writeToFile(projectTitle,response.contributing);
-        writeToFile(projectTitle,response.tests);
-        writeToFile(projectTitle,response.faq);
-    })
+    .then((data) =>  {
+        writeToFile(`${data.title}`, data);
+    });
 }
 
 // Function call to initialize app
