@@ -50,38 +50,38 @@ const questions = [
 function writeToFile(fileName, data) {
 
     const dataToWrite = 
-    `# ${data.title}
+    `${licenseChosen}
+
+# ${data.title}
     
-    ##App description
+##App description
 
-    ${data.description}
+${data.description}
 
-    ##Table of Contents
+##Table of Contents
 
-    ${data.table}
+${data.table}
 
-    ##Installation Process
+##Installation Process
 
-    ${data.installation}
+${data.installation}
 
-    ##Usage
+##Usage
 
-    ${data.usage}
+${data.usage}
 
-    ##Contributing
+##Contributing
 
-    ${data.contributing}
+${data.contributing}
 
-    ##Tests
+##Tests
 
-    ${data.tests}
+${data.tests}
 
-    ##FAQ
+##FAQ
 
-    ${data.faq}
-
-    ${licenseChosen}
-    `
+${data.faq}
+`
     
     fs.writeFile(fileName, dataToWrite, (err) =>
             err ? console.error(err) : console.log('Readme created successfully!')
